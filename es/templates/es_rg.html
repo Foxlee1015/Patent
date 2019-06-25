@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A layout example that shows off a responsive product landing page.">
+    <title>Landing Page &ndash; Layout Examples &ndash; Pure</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-" crossorigin="anonymous">
+
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='marketing-old-ie.css') }}">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='marketing.css') }}">
+    <!--<![endif]-->
+
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+
+        <!--[if lte IE 8]>
+            <link rel="stylesheet" href="css/layouts/marketing-old-ie.css">
+        <![endif]-->
+        <!--[if gt IE 8]><!-->
+            <link rel="stylesheet" href="css/layouts/marketing.css">
+        <!--<![endif]-->
+</head>
+<body>
+
+<div class="header">
+    <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
+        <a class="pure-menu-heading" href="/">Your Patents</a>
+
+        <ul class="pure-menu-list">
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">Home</a></li>
+            <li class="pure-menu-item"><a href="#" class="pure-menu-link">Sign Up</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="splash-container">
+    <div class="splash">
+        <h1 class="splash-head">Patent</h1>
+    </div>
+</div>
+
+<div class="content-wrapper">
+    <div class="content">
+        <h2 class="content-head is-center">Upload a csv file</h2>
+
+        <div class="pure-g">
+            <div class="l-box pure-u-1 pure-u-md-1-2 pure-u-lg-1-4">
+
+                <form method="POST" action="" enctype="multipart/form-data">
+                    <h3 class="content-subhead">
+                    주의점
+                    </h3>
+                    <p>filename=index (영어 소문자만 가능) // "," 제거  // 빈칸 채우기  // column 확인 //</p>
+                    <input type=file name=file value="{{request.form.product_pic}}">
+                    <input class="login__button login__button--submit _loginSubmitButton" type="submit" value="okay">
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="content">
+        <div class="pure-g">
+            <div class="l-box-lrg pure-u-1 pure-u-md-3-5">
+                <h4>Contact Us</h4>
+                <p>
+                    dh16931@gmail.com
+                </p>
+
+                <h4>More Information</h4>
+                <p>
+                   Github: https://github.com/Foxlee1015/1st_project
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer l-box is-center">
+        Welcome to patent search engine and trends
+    </div>
+
+</div>
+
+</body>
+</html>

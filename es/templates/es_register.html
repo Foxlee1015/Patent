@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>등록</title>
+</head>
+<body>
+<a href="/">Home</a>
+
+<form method="POST" action="" enctype="multipart/form-data">
+    <p>등록</p>
+    <p></p>
+    <p></p>
+    <p>파일 업로드</p>
+    <p>주의점</p>
+    <p>filename=index (영어 소문자만 가능) // "," 제거  // 빈칸 채우기  // column 확인 //</p>
+    <input type=file name=file value="{{request.form.product_pic}}">
+    <input class="login__button login__button--submit _loginSubmitButton" type="submit" value="okay">
+</form>
+
+<p>-</p>
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+<div class="alert alert-{{ category }}">
+    {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+<p>-</p>
+
+<p>-</p>
+
+</body>
+</html>

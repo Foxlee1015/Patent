@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A layout example that shows off a responsive email layout.">
+    <title> {{ INDEX }}</title>
+
+    <!--<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-" crossorigin="anonymous">-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='pure.css') }}">
+        <!--[if lte IE 8]>
+            <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='email-old-ie.css') }}">
+        <![endif]-->
+        <!--[if gt IE 8]><!-->
+            <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='email.css') }}">
+        <!--<![endif]-->
+
+</head>
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
+<script>
+jQuery(document).ready(function($) {
+
+$(".scroll").click(function(event){
+event.preventDefault();
+$('html,body').animate({scrollTop:$(this.hash).offset().top}, 500);
+});
+});
+</script>
+<style type="text/css">
+<!--body {
+    overflow:hidden;
+}-->
+</style>
+<div id="layout" class="content pure-g">
+    <div id="nav" class="pure-u">
+        <a href="#" class="nav-menu-button">Menu</a>
+
+        <div class="nav-inner">
+            <a class="primary-button pure-button" href="/">Home</a>
+              <div class="pure-menu">
+                <ul class="pure-menu-list">
+                    <li class="pure-menu-item"><a href="/index/{{index}}/size/10" class="pure-menu-link"> {{ INDEX }}</a></li>
+                    <li class="pure-menu-item"><a href="/excel/{{index}}" class="pure-menu-link"><span class="email-label-personal"></span>DB</a></li>
+                    <li class="pure-menu-item"><a href="/country/{{index}}" class="pure-menu-link"><span class="email-label-work"></span>Country</a></li>
+                    <li class="pure-menu-item"><a href="/search/{{index}}" class="pure-menu-link"><span class="email-label-travel"></span>Search</a></li>
+                </ul>
+                 <form method="POST" action="">
+                     <input class="primary-button pure-button" type="submit" value="Delete index">
+                 </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="list" class="pure-u-1">
+        {% if data: %}
+        {% for i in range(n) %}
+        <div class="email-item email-item-selected pure-g">
+
+            <div class="pure-u-3-4">
+                <h5 class="email-name">{{ data[i]['_source']['국가코드'] }}</h5>
+                <h4 class="email-subject">{{ data[i]['_source']['출원번호'] }}</h4>
+                <a href="#target{{i}}"><p class="email-desc">
+                    {{ data[i]['_source']['발명의 명칭'] }}
+                </p></a>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}{% endif %}
+    </div>
+        {% if data: %}
+
+    <div id="main" class="pure-u-1">
+        {% for i in range(n) %}
+        <div class="email-content">
+            <div class="email-content-header pure-g">
+                <div class="pure-u-1-2">
+                    <h4 id="target{{i}}" class="email-content-title">{{ data[i]['_source']['발명의 명칭'] }}</h4>
+                    <p class="email-content-subtitle">출원번호 : <a>{{ data[i]['_source']['출원번호'] }}</a> 출원일 <span>{{ data[i]['_source']['출원일'] }}</span> </p>
+                    <p  class="secondary-button pure-button">{{ data[i]['_source']['국가코드'] }}</p>
+                </div>
+            </div>
+            <div class="email-content-body">
+                <p><h6> {{ data[i]['_source']['요약'] }}</h6> </p>
+            </div>
+        </div>
+         {% endfor %}{% else %}{% endif %}
+    </div>
+
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                  {{ message }}
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+</div>
+<script src="https://yui-s.yahooapis.com/3.18.1/build/yui/yui-min.js"></script>
+<script>
+    YUI().use('node-base', 'node-event-delegate', function (Y) {
+
+        var menuButton = Y.one('.nav-menu-button'),
+            nav        = Y.one('#nav');
+
+        // Setting the active class name expands the menu vertically on small screens.
+        menuButton.on('click', function (e) {
+            nav.toggleClass('active');
+        });
+
+        // Your application code goes here...
+
+    });
+</script>
+
+</body>
+</html>
