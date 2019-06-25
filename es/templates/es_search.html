@@ -2,28 +2,37 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>검색</title>
+    <title>{{ index }} - 검색</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='marketinghome.css') }}">
+
 </head>
 <body>
-<a href="/">Home</a>
+
+
+<div class="header">
+    <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
+        <a class="pure-menu-heading" href="/search/{{index }}">{{ index }}</a>
+        <ul class="pure-menu-list">
+            <div class="pure-menu-item"><a href="/" class="pure-menu-link">Home</a></div>
+        </ul>
+    </div>
+</div>
+
 <form method="POST" action="">
-    <p>Search</p>
-    <p>Country</p>
-    {{ form.country(class="form-control") }}
-    <p>Title</p>
-    {{ form.title(class="form-control") }}
-    <p>Abstract</p>
-    {{ form.abstract(class="form-control") }}
+  <nav class="navbar navbar-expand-lg navbar-light bg-light" style="text-align: center; display: block;">
+    <p>Country  </p>
+    {{ form.country(class="form-control mr-sm-2") }}
+    <p>Title  </p>
+    {{ form.title(class="form-control mr-sm-2") }}
+    <p>Abstract  </p>
+    {{ form.abstract(class="form-control mr-sm-2") }}
     <input class="login__button login__button--submit _loginSubmitButton" type="submit" value="okay">
+  </nav>
 </form>
 
-<p>요약</p>
 
-<p>-</p>
-
-<p>-</p>
-
-<p>-</p>
+<p></p>
 <p>검색 결과</p>
 {% if results: %}
 {% for i in range(n) %}

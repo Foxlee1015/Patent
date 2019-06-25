@@ -38,15 +38,15 @@ def index(index,number):
         return render_template('es_index.html', data=data, n = len(data), form=form, index=index, INDEX=index.upper())
 
 @elastic.route('/search/<string:index>', methods=['GET', 'POST'])
-def search(index):
+def search(index): 
     form = Search_Form(request.form)
     if request.method == "POST" :
         title, country, abstract = form.title.data, form.country.data, form.abstract.data
         data = Data_handler(index, "patent")                   # DOC_TYPE 추후 수정 필요
         result = data.search_data(country, title, abstract)
-        return render_template('es_search.html', results=result, n=len(result), form=form)
+        return render_template('es_search.html', results=result, n=len(result),index=index, form=form)
     else:
-        return render_template('es_search.html', results=None, form=form)
+        return render_template('es_search.html', results=None, form=form, index=index)
 
 @elastic.route('/index/register', methods=['GET','POST'])       # 에러,, 갑자기 404 에러 뜸, /register 에서 에러, /r 하니 에러 사라지고 그후 url 수정함
 def register():
