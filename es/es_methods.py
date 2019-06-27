@@ -78,13 +78,27 @@ class Data_handler():
             "size": 500  # 검색되는 건수 제한
         }
         results = es.search(index=index, body=body)
+        re_count = results['hits']['total']['value']
+        re_hits = results['hits']['hits']
+        n = len(re_hits)
+        result = []        
+        for i in range(n):
+            data = re_hits[i]['_source']
+            result.append([data['국가코드'], data['출원일'], data['출원인'], data['발명의 명칭'], data['요약'], data['대표청구항'], re_hits[i]['_score']])
+        return result, re_count
+
+    def search_all(self):
+        index = self.index
+        body = { "query" : { "match_all" : {} }, "size" : 1000}
+        results = es.search(index=index, body=body)
+        count = results['hits']['total']['value']
         re_hits = results['hits']['hits']
         n = len(re_hits)
         result = []
         for i in range(n):
             data = re_hits[i]['_source']
-            result.append([data['국가코드'], data['출원일'], data['출원인'], data['발명의 명칭'], data['요약'], data['대표청구항']])
-        return result
+            result.append([data['국가코드'], data['출원일'], data['출원인'], data['발명의 명칭'], data['요약'], data['대표청구항'], '-'])
+        return result, count
 
     def country_data(self):
         index = self.index

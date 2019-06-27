@@ -42,7 +42,7 @@ $('html,body').animate({scrollTop:$(this.hash).offset().top}, 500);
                 <ul class="pure-menu-list">
                     <li class="pure-menu-item"><a href="/index/{{index}}/size/10" class="pure-menu-link"> {{ INDEX }}</a></li>
                     <li class="pure-menu-item"><a href="/excel/{{index}}" class="pure-menu-link"><span class="email-label-personal"></span>DB</a></li>
-                    <li class="pure-menu-item"><a href="/country/{{index}}" class="pure-menu-link"><span class="email-label-work"></span>Country</a></li>
+                    <!--<li class="pure-menu-item"><a href="/country/{{index}}" class="pure-menu-link"><span class="email-label-work"></span>Country</a></li>-->
                     <li class="pure-menu-item"><a href="/search/{{index}}" class="pure-menu-link"><span class="email-label-travel"></span>Search</a></li>
                 </ul>
                  <form method="POST" action="">
@@ -75,13 +75,12 @@ $('html,body').animate({scrollTop:$(this.hash).offset().top}, 500);
         <div class="email-content">
             <div class="email-content-header pure-g">
                 <div class="pure-u-1-2">
-                    <h4 id="target{{i}}" class="email-content-title">{{ data[i]['_source']['발명의 명칭'] }}</h4>
+                    <h4 id="target{{i}}" class="email-content-title" style="margin-top:30px">{{ data[i]['_source']['발명의 명칭'] }}</h4>
                     <p class="email-content-subtitle">출원번호 : <a>{{ data[i]['_source']['출원번호'] }}</a> 출원일 <span>{{ data[i]['_source']['출원일'] }}</span> </p>
                     <p  class="secondary-button pure-button">{{ data[i]['_source']['국가코드'] }}</p>
+                    <h6> {{ data[i]['_source']['요약'] }}</h6> 
                 </div>
-            </div>
-            <div class="email-content-body">
-                <p><h6> {{ data[i]['_source']['요약'] }}</h6> </p>
+
             </div>
         </div>
          {% endfor %}{% else %}{% endif %}

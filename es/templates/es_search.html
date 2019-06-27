@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ index }} - 검색</title>
+    <title>{{ index_up }} - 검색</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='marketinghome.css') }}">
 
@@ -12,31 +12,110 @@
 
 <div class="header">
     <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
-        <a class="pure-menu-heading" href="/search/{{index }}">{{ index }}</a>
+        <a class="pure-menu-heading" href="/search/{{index }}">{{ index_up }}</a>
         <ul class="pure-menu-list">
             <div class="pure-menu-item"><a href="/" class="pure-menu-link">Home</a></div>
         </ul>
     </div>
 </div>
-
+<div style="width: 100%; height: 300px;">
 <form method="POST" action="">
-  <nav class="navbar navbar-expand-lg navbar-light bg-light" style="text-align: center; display: block;">
-    <p>Country  </p>
-    {{ form.country(class="form-control mr-sm-2") }}
-    <p>Title  </p>
-    {{ form.title(class="form-control mr-sm-2") }}
-    <p>Abstract  </p>
-    {{ form.abstract(class="form-control mr-sm-2") }}
-    <input class="login__button login__button--submit _loginSubmitButton" type="submit" value="okay">
+   <nav class="navbar navbar-expand-lg navbar-light bg-light" style="display: block; height: 350px;">
+    <div style="width: 40%; float:left">
+      <p>Country  </p>
+      {{ form.country(class="form-control mr-sm-2") }}
+      <p></p>
+      <p>Title  </p>
+      {{ form.title(class="form-control mr-sm-2") }}
+      <p></p>
+      <p>Abstract  </p>
+      {{ form.abstract(class="form-control mr-sm-2") }}
+      <div style="margin-top:10px;  text-align: center;">
+        <input class="btn btn-outline-info" style="width: 80%"  type="submit" value="Search">
+      </div>
+    </div>
+  <div style="width:60%; float:right; text-align: center;">
+   <div style="height:100%;">
+     <p></p>
+       <div class="one-graph" style="margin-left:10%; float: left;" ></div>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script>
+
+var w = 200, h = 200;
+var dataName = {{ country_name|tojson|safe }};
+var graphData = {{ counts }};
+var colorData = ["#FD2F56", "#F1E7DE", "#343F3A", "#5ED1D4", "#FFC001"];
+var pie = d3.pie();
+var arc = d3.arc().innerRadius(35).outerRadius(100);
+
+
+    // 그래프 사이즈
+var svg = d3.select(".one-graph")
+    .append("svg")
+    .attr("width", w)
+    .attr("height", h)
+    .attr("id", "graphWrap");
+
+    // 데이터, 그래프 설정
+var g = svg.selectAll(".pie")
+    .data(pie(graphData))
+    .enter()
+    .append("g")
+    .attr("class", "pie")
+    .attr("transform","translate("+w/2+","+h/2+")");
+
+    // fill  채우기, 색깔
+g.append("path")
+    .style("fill", function(d, i) {
+        return colorData[i];
+    })
+    // 36~49  애니메이션
+    .transition()
+    .duration(400)
+    .delay(function(d, i) {
+        return i * 400;
+    })
+    .attrTween("d", function(d, i) {
+        var interpolate = d3.interpolate(
+            {startAngle : d.startAngle, endAngle : d.startAngle},
+            {startAngle : d.startAngle, endAngle : d.endAngle}
+        );
+        return function(t){
+            return arc(interpolate(t));
+        }
+    });
+
+g.append("text")
+    .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
+    .attr("dy", ".35em")
+    .attr("font-size", "12px")
+    .style("text-anchor", "middle")
+    .text(function(d, i) {
+        return  d.endAngle-d.startAngle > 0.2 ?
+                dataName[i] + " (" + Math.round(1000*(d.endAngle-d.startAngle)/(Math.PI*2))/10 + "%)" : ""
+    });
+
+svg.append("text")
+    .attr("class", "total")
+    .attr("transform", "translate("+(w/2-35)+", "+(h/2+5)+")")
+    .text(" Total:" + d3.sum(graphData));
+
+
+</script>
+      </div>
+    </div>
   </nav>
 </form>
-
+</div>
 
 <p></p>
+<div class="contrainer">
 <p>검색 결과</p>
 {% if results: %}
+<p> 검색된 건수 : {{ count }} </p>
 {% for i in range(n) %}
     <p>No. {{ i+1 }}</p>
+    <p>Search score : {{ results[i][6] }} </p>
     <p>Country : {{ results[i][0] }} </p>
     <p>App. date : {{ results[i][1] }} </p>
     <p>Inventor : {{ results[i][2] }}</p>
@@ -46,6 +125,6 @@
     <p> 링크</p>
 {% endfor %}
 {% else %}<p>검색을 진행하십시오</p>{% endif %}
-
+<div>
 </body>
 </html>
