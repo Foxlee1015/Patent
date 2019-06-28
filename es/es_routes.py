@@ -3,7 +3,7 @@ import json
 import pandas as pd
 from flask import session, request, render_template, flash, url_for, redirect, Blueprint, jsonify
 from elasticsearch import Elasticsearch
-from es.es_methods import Data_handler   # data = 디렉토리, es_class = 파일명(py), Data_handler = 클래스
+from es.es_methods import Data_handler, DataForGraph
 from es.forms.forms import Search_Form, File_Form, Submit_Form, LoginForm
 from werkzeug.utils import secure_filename
 #import numpy as np
@@ -46,11 +46,16 @@ def search(index):
     country_name, counts = data.country_data()
     if request.method == "POST" :
         title, country, abstract = form.title.data, form.country.data, form.abstract.data
-        result, count = data.search_data(country, title, abstract)
-        return render_template('es_search.html', results=result, n=len(result),index=index, form=form, count=count, index_up=index_up, country_name=country_name, counts=counts)
+        result, count, countries_count = data.search_data(country, title, abstract)
+        data_graph = DataForGraph(result)
+        d_kr, d_jp, d_us, d_ep = data_graph.dataForLine() 
+        return render_template('es_search.html', results=result, n=len(result),index=index, form=form, count=count, index_up=index_up, country_name=country_name, counts=countries_count, d_kr=d_kr, d_jp=d_jp, d_us=d_us, d_ep=d_ep)
     else:
         result, count = data.search_all()
-        return render_template('es_search.html', results=result, n=len(result), count=count, form=form, index=index, country_name=country_name, counts=counts, index_up=index_up)
+        data_graph = DataForGraph(result)
+        d_kr, d_jp, d_us, d_ep = data_graph.dataForLine()
+        return render_template('es_search.html', results=result, n=len(result), count=count, form=form, index=index, country_name=country_name, counts=counts, index_up=index_up, d_kr=d_kr, d_jp=d_jp, d_us=d_us, d_ep=d_ep)
+
 
 @elastic.route('/index/register', methods=['GET','POST'])       # 에러,, 갑자기 404 에러 뜸, /register 에서 에러, /r 하니 에러 사라지고 그후 url 수정함
 def register():

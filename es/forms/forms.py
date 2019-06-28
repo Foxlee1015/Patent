@@ -4,7 +4,7 @@ from flask_wtf.file import FileAllowed
 class Search_Form(Form):
     title = TextAreaField('Title', [validators.data_required(), validators.Length(min=1, max=20)])
     abstract = TextAreaField('Title', [validators.data_required(), validators.Length(min=1, max=20)])
-    country = SelectField('Country', choices=[('US', 'US'), ('KR', 'KR'), ('JP', 'JP'), ('EP', 'EP')])
+    country = SelectField('Country', choices=[('ALL' ,'ALL' ),('US', 'US'), ('KR', 'KR'), ('JP', 'JP'), ('EP', 'EP')])
     submit = SubmitField('Search')
 
 class File_Form(Form):
