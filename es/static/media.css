@@ -1,0 +1,23 @@
+.wrap { width: 100%; height: 350px; margin-top:50px;}
+
+@media (max-width:4000px){
+    .navbar { width: 100%; display : block; height : 350px;} 
+    .search { width : 40%; float : left; }
+    .graph {  width : 60%; float : left; } 
+    .graph1 { width : 50%; float : left; text-align:center; margin: 20px auto;}
+    .graph2 { width : 50%; float : left; text-align:center; margin: 20px auto;}
+
+}
+
+@media (max-width:1300px) {
+    .navbar { height : 780px; }
+    .search { width : 100%; }
+    .graph { clear : both; width : 100%; }
+    .graph1 { width: 100%; }
+    .graph2 {  clear : both; width : 100%; }
+
+}
+
+@media (max-width:420px) {
+    .navbar { width : 430px; }
+}

@@ -56,7 +56,6 @@ $('html,body').animate({scrollTop:$(this.hash).offset().top}, 500);
         {% if data: %}
         {% for i in range(n) %}
         <div class="email-item email-item-selected pure-g">
-
             <div class="pure-u-3-4">
                 <h5 class="email-name">{{ data[i]['_source']['국가코드'] }}</h5>
                 <h4 class="email-subject">{{ data[i]['_source']['출원번호'] }}</h4>
@@ -75,9 +74,10 @@ $('html,body').animate({scrollTop:$(this.hash).offset().top}, 500);
         <div id="target{{i}}" class="email-content" style="height:600px; border:5pt groove white  ; margin-top:5px; ">
             <div class="email-content-header pure-g">
                 <div class="pure-u-1-2" >
-                    <h4 class="email-content-title" style="margin-top:20px"> 명칭 : {{ data[i]['_source']['발명의 명칭'] }}</h4>
-                    <p class="email-content-subtitle">출원번호 : <a>{{ data[i]['_source']['출원번호'] }}</a> 출원일 <span>{{ data[i]['_source']['출원일'] }}</span> </p>
-                    <p  class="secondary-button pure-button">{{ data[i]['_source']['국가코드'] }}</p>
+                    <div style="color : #aaa; border-bottom: 1px solid #eee; font-size: 5px; "> No. {{ i+1 }}    <img width="20px" height="auto" src="{{ url_for('static', filename='images/' + data[i]['_source']['국가코드'] + '.png' ) }}" alt="Country">
+                    </div>
+                    <h4 class="post-title" style="margin-top:20px"> {{ data[i]['_source']['발명의 명칭'] }}</h4>
+                    <h5 class="email-content-subtitle">출원번호 : <a>{{ data[i]['_source']['출원번호'] }}</a> 출원일 <span>{{ data[i]['_source']['출원일'] }}</span> </h5>
                     <h6> {{ data[i]['_source']['요약'] }}</h6> 
                 </div>
 
